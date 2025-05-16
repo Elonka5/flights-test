@@ -1,8 +1,11 @@
+import FlightsList from "../../components/FlightsList/FlightsList"
 
 
 const FlightsPage = () => {
   return (
-    <div>FlightsPage</div>
+    <div>
+        <FlightsList/>
+    </div>
   )
 }
 

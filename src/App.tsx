@@ -1,13 +1,9 @@
 import { Suspense, lazy } from "react";
-import { Navigate, Route, Routes} from "react-router-dom";
-
-import "./App.css";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 
 const Home = lazy(() => import("./pages/FlightsPage/FlightsPage"));
-const FlightsDetailsPage = lazy(
-  () => import("./pages/FlightDetailsPage/FlightDetailsPage")
-);
+const FlightsDetailsPage = lazy(() => import("./pages/FlightDetailsPage/FlightDetailsPage"));
 const Cart = lazy(() => import("./pages/Cart/Cart"));
 
 export const App = () => {
@@ -25,6 +21,4 @@ export const App = () => {
       </Suspense>
     </div>
   );
-}
-
-
+};
