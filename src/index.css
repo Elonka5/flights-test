@@ -1,0 +1,150 @@
+*,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    position: relative;
+    scrollbar-width: none;
+     font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    background-color: var(--background);
+    color: var(--primary);
+  }
+
+
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: var(--white);
+  }
+  
+   ::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 8px;
+  }
+  
+  input,
+  select,
+  textarea {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: text;
+  }
+  
+  img {
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+  
+  ul,
+  ol {
+    list-style: none;
+  }
+  
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+    font-weight: normal;
+    margin-block-start: 0;
+  }
+  
+  
+  a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  address {
+    font-style: normal;
+  }
+  
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .backdrop-menu {
+    background-color: var(--light-gray);
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+  }
+  
+  
+  /* CONTAINER*/
+  
+  .container {
+    max-width: 360px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  @media screen and (min-width: 540px) {
+    .container {
+      max-width: 540px;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .container {
+      max-width: 768px;
+      padding-left: 48px;
+      padding-right: 48px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .container {
+      max-width: 1024px;
+      padding-left: 86px;
+      padding-right: 86px;
+    }
+  }
+  
+  @media (min-width: 1440px) {
+    .container {
+      max-width: 1440px;
+      padding-left: 64px;
+      padding-right: 64px;
+    }
+  }
