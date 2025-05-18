@@ -1,15 +1,18 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import ResponsiveAppBar from '../Header/Header';
+// import ResponsiveAppBar from '../Header/Header';
+import Header from '../Header/Header';
 
 const Layout = () => {
   return (
-    <div>
-      <ResponsiveAppBar />
+    <>
+      <Header/>
+      <main>
       <Suspense fallback={null}>
         <Outlet />
       </Suspense>
-    </div>
+      </main>
+    </>
   );
 };
 

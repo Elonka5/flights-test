@@ -1,8 +1,13 @@
-// import React from 'react'
+import { Typography } from '@mui/material'
+import FlightDetails from '../../components/FlightDetails/FlightDetails'
 
 const FlightDetailsPage = () => {
   return (
-    <div>FlightDetailsPage</div>
+    <>
+    <Typography component="h1" variant="h4" gutterBottom>
+            Select your seat
+          </Typography>
+    <FlightDetails/></>
   )
 }
 

@@ -19,7 +19,7 @@
   }
 
 
-
+/* 
   ::-webkit-scrollbar {
     width: 8px;
     background-color: var(--white);
@@ -29,7 +29,7 @@
     background-color: var(--accent);
     border-radius: 8px;
   }
-  
+   */
   input,
   select,
   textarea {

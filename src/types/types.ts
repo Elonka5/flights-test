@@ -16,6 +16,8 @@ export interface Flight {
   tickets: Tickets
 }
 
+export type SeatStatus = "free" | "occupied" | "selected";
+
 export interface Ticket {
   flightId: string;
   seat: string;
@@ -23,4 +25,5 @@ export interface Ticket {
   airline: string;
   from: string;
   to: string;
+  status: SeatStatus;
 }
