@@ -1,54 +1,123 @@
-# React + TypeScript + Vite
+✈️ AirTickets Booking App
+    
+A modern web application for searching, viewing, and booking flight tickets. Built with React, TypeScript, Redux, and Material-UI, this app provides a seamless experience for users to explore flights, select seats, and manage their bookings.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📋 Table of Contents
 
-Currently, two official plugins are available:
+Features
+Demo
+Tech Stack
+Project Structure
+Prerequisites
+Installation
+Usage
+Contributing
+License
+Contact
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Flight Search: Browse available flights with detailed info (airline, route, times, price, etc.).
+Seat Selection: Choose seats in business or economy class with dynamic pricing.
+Cart Management: Add/remove tickets and view the total price.
+Favorites: Mark flights as favorites for quick access.
+Responsive Design: Optimized for desktop and mobile using Material-UI components.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+🎥 Demo
+(TODO: Add a GIF or link to a demo video here)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+🛠️ Tech Stack
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+
+
+Technology
+Description
+
+
+
+React
+Frontend library for UI
+
+
+TypeScript
+Static typing for better code
+
+
+Redux
+State management for cart/flights
+
+
+Material-UI
+Styled and responsive components
+
+
+React Router
+Navigation between pages
+
+
+LocalStorage
+Persists seat data
+
+
+
+📝 Prerequisites
+
+Node.js (v16 or higher)
+npm or Yarn
+Git
+
+
+🚀 Installation
+Follow these steps to set up the project locally:
+
+Clone the repository:git clone https://github.com/your-username/air-tickets-booking.git
+
+
+Navigate to the project directory:cd air-tickets-booking
+
+
+Install dependencies:Using npm:npm install
+
+Or using Yarn:yarn install
+
+
+Start the development server:Using npm:npm start
+
+Or using Yarn:yarn start
+
+The app will be available at http://localhost:3000.
+
+
+🖥️ Usage
+
+Home Page: View a list of flights with details.
+Flight Details: Click a flight to select seats (business/economy).
+Cart: Add tickets, view the total, and remove tickets as needed.
+Favorites: Click the heart icon to mark flights as favorites.
+
+
+🤝 Contributing
+We welcome contributions! Follow these steps:
+
+Fork the repository.
+Create a new branch:git checkout -b feature/your-feature
+
+
+Commit your changes:git commit -m "Add your feature"
+
+
+Push to the branch:git push origin feature/your-feature
+
+
+Open a Pull Request.
+
+
+📜 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+📧 Contact
+For questions or suggestions, reach out to your-email@example.com.
+
+Last updated: May 19, 2025

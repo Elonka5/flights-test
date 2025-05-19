@@ -8,5 +8,6 @@ export const flightsSection: SxProps<Theme> = (theme) => ({
 
 export const sectionStyles: SxProps<Theme> = (theme) => ({
     backgroundColor:theme.palette.secondary.main,
+    minHeight:"100vh",
 py:"32px",
 }  )

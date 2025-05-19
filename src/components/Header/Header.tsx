@@ -29,7 +29,7 @@ const Header: React.FC = () => {
           tabIndex={0}
         >
           <img
-            src="/public/favicon.svg"
+            src="/favicon.svg"
             alt="Logo Icon"
             style={{ width: "30px", height: "30px", marginRight: "8px" }}
           />
