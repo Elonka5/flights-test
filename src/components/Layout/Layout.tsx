@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-// import ResponsiveAppBar from '../Header/Header';
+
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 const Layout = () => {
   return (
@@ -12,6 +13,7 @@ const Layout = () => {
         <Outlet />
       </Suspense>
       </main>
+      <Footer/>
     </>
   );
 };

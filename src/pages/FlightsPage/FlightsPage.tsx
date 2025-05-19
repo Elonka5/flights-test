@@ -1,12 +1,13 @@
-import FlightsList from "../../components/FlightsList/FlightsList"
-
+import FlightSection from "../../components/FlightsSection/FlightsSection";
+import Hero from "../../components/Hero/Hero";
 
 const FlightsPage = () => {
   return (
-    <div>
-        <FlightsList/>
-    </div>
-  )
-}
+    <>
+      <Hero />
+      <FlightSection />
+    </>
+  );
+};
 
-export default FlightsPage
+export default FlightsPage;

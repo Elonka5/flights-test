@@ -1,15 +1,20 @@
-// import Box from "@mui/material/Box";
+import { Box, IconButton } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import type { Flight } from "../../types/types";
-import CompanyLogo from "../CompanyLogo/CompanyLogo";
-// import { Link } from "react-router-dom";
-import { IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+
+import type { Flight } from "../../types/types";
+import {
+  cardActionsWrapper,
+  cardStyles,
+  informationText,
+  informationWrapper,
+} from "./FlightCard.styles";
+
+import CardTopComponent from "../CardTopComponent/CardTopComponent";
 
 interface BasicCardProps {
   flight: Flight;
@@ -23,60 +28,32 @@ const FlightCard = ({
   isFavorite,
   toggleFavorite,
 }: BasicCardProps) => {
-  const {
-    id,
-    airline,
-    from,
-    to,
-    departureTime,
-    arrivalTime,
-    price,
-    terminal,
-    gate,
-    tickets,
-  } = flight;
+  const { id, price, terminal, gate, tickets } = flight;
   return (
-    <Card component="li" sx={{ minWidth: 275 }} onClick={onClick}>
-      {/* <Link to={`/flights/${flight.id}`} style={{ textDecoration: 'none' }}> */}
-      <CardContent>
-        <CompanyLogo company={airline} size={40} />
-        <Typography variant="h6" component="h2" gutterBottom>
-          {from} → {to}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <strong>Flight ID:</strong>
-          {id}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <strong>Airline:</strong> {airline}
-        </Typography>
-
-        <Typography variant="body2" color="text.secondary">
-          <strong>Departure:</strong> {departureTime}
-        </Typography>
-
-        <Typography variant="body2" color="text.secondary">
-          <strong>Arrival:</strong> {arrivalTime}
-        </Typography>
-
-        <Typography variant="body2" color="text.secondary">
+    <Card component="li" sx={cardStyles} onClick={onClick}>
+      <CardTopComponent item={flight} />
+      <Box sx={informationWrapper}>
+        <Typography variant="body2" sx={informationText}>
           <strong>Price:</strong> ${price}
         </Typography>
 
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" sx={informationText}>
           <strong>Terminal:</strong> {terminal}
         </Typography>
 
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" sx={informationText}>
           <strong>Gate:</strong> {gate}
         </Typography>
 
-        <Typography variant="body2" color="text.secondary">
-          <strong>Tickets:</strong> {tickets.total} total / {tickets.remaining}{" "}
-          remaining
+        <Typography variant="body2" sx={informationText}>
+          <strong>Total:</strong> {tickets.total} tickets
         </Typography>
-      </CardContent>
-      <CardActions>
+        <Typography variant="body2" sx={informationText}>
+          <strong>Remaining:</strong> {tickets.remaining} tickets
+        </Typography>
+      </Box>
+
+      <CardActions sx={cardActionsWrapper}>
         <Button size="small">Learn More</Button>
         <IconButton
           onClick={(e) => {
@@ -85,10 +62,13 @@ const FlightCard = ({
           }}
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
-          {isFavorite ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
+          {isFavorite ? (
+            <FavoriteIcon sx={{ fill: "#ffad36" }} />
+          ) : (
+            <FavoriteBorderIcon />
+          )}
         </IconButton>
       </CardActions>
-      {/* </Link> */}
     </Card>
   );
 };

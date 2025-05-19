@@ -1,53 +1,43 @@
 import type { Theme } from "@mui/material";
 
 export const rootContainer = {
-  p: 3,
   maxWidth: 800,
   mx: "auto",
 };
 
 
-// export const seatSelectionTitle = {
-//   mt: 3,
-// };
-
 export const seatsContainer = (theme: Theme) => ({
-  p: 3,
-  mt: 2,
+  p: { xs: 2, md: 3 },
   bgcolor: theme.palette.grey[100],
   borderRadius: 2,
   elevation: 3,
 });
 
 export const businessRow = {
-  gap:2,
+  gap: 2,
   mb: 2,
   justifyContent: "center",
 };
 
-
 export const economyRow = {
-    gap:2,
+  gap: { xs: 1, sm: 2 },
   mb: 1,
   justifyContent: "center",
 };
 
-
 export const aisleSpacer = {
-  width: { xs: 50, sm: 60 },
+  width: { xs: 2, sm: 60 },
 };
 
-
 export const seatBox = (theme: Theme, isBusinessClass: boolean) => ({
-  width: { xs: isBusinessClass ? 50 : 40, sm: isBusinessClass ? 60 : 50 },
-  height: { xs: isBusinessClass ? 50 : 40, sm: isBusinessClass ? 60 : 50 },
+  width: { xs: isBusinessClass ? 48 : 36, sm: isBusinessClass ? 60 : 50 },
+  height: { xs: isBusinessClass ? 48 : 36, sm: isBusinessClass ? 60 : 50 },
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   borderRadius: 2,
   transition: theme.transitions.create(["background-color", "border"]),
 });
-
 
 export const getSeatStyle = (
   theme: Theme,
@@ -74,15 +64,19 @@ export const getSeatStyle = (
     };
   }
   return {
-    bgcolor: isBusinessClass ? theme.palette.info.light : theme.palette.background.paper,
+    bgcolor: isBusinessClass
+      ? theme.palette.primary.main
+      : theme.palette.secondary.main,
     color: theme.palette.text.primary,
     cursor: "pointer",
     border: isBusinessClass
-      ? `1px solid ${theme.palette.info.main}`
+      ? `1px solid ${theme.palette.success.dark}`
       : `1px solid ${theme.palette.divider}`,
     fontSize: isBusinessClass ? "1rem" : "0.875rem",
     "&:hover": {
-      bgcolor: isBusinessClass ? theme.palette.info.main : theme.palette.grey[200],
+      bgcolor: isBusinessClass
+        ? theme.palette.secondary.main
+        : theme.palette.grey[200],
     },
   };
 };

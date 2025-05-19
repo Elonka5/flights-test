@@ -38,6 +38,7 @@ const CompanyLogo = ({ company, size = 40 }: CompanyProps) => {
       width={size}
       height={size}
       style={{ objectFit: "contain", width: "50px", height: "50px" }}
+      loading="lazy"
     />
   );
 };

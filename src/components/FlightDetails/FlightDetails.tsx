@@ -1,11 +1,14 @@
+import { Box, CircularProgress, Grid, Paper, Typography, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import type { Flight, SeatStatus, Ticket } from "../../types/types";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../redux/store/store";
+
+import type { AppDispatch} from "../../redux/store/store";
+import type { Flight, SeatStatus, Ticket } from "../../types/types";
 import { addTicket, removeTicket } from "../../redux/slice/cartSlice";
-import { Box, Grid, Paper, Typography, useTheme } from "@mui/material";
+import { selectCart } from "../../redux/selectors/cartSelectors";
 import { getFlightById } from "../../redux/flightsApi";
+
 import {
   rootContainer,
   seatsContainer,
@@ -18,7 +21,7 @@ import {
 const FlightDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const cartTickets = useSelector((state: RootState) => state.cart.tickets);
+  const cartTickets = useSelector(selectCart);
   const theme = useTheme();
 
   const [flight, setFlight] = useState<Flight | null>(null);
@@ -40,8 +43,8 @@ const FlightDetails: React.FC = () => {
       try {
         const data = await getFlightById(id);
         setFlight(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch flight.");
+      } catch (error) {
+        setError(error instanceof Error ? error.message : "Failed to fetch flight.");
       } finally {
         setIsLoading(false);
       }
@@ -93,21 +96,19 @@ const FlightDetails: React.FC = () => {
     if (!flight || seats[seatId] === "occupied") return;
 
     const alreadySelected = cartTickets.some(
-      (t) => t.flightId === flight.id && t.seat === seatId
+      (t) => t.id === flight.id && t.seat === seatId
     );
 
     if (alreadySelected) {
-      dispatch(removeTicket({ flightId: flight.id, seat: seatId }));
+      dispatch(removeTicket({ id: flight.id, seat: seatId }));
     } else {
       const isBusinessClass = parseInt(seatId.match(/\d+/)?.[0] || "0") <= config.business.rows;
       const ticket: Ticket = {
-        flightId: flight.id,
-        seat: seatId,
-        price: isBusinessClass ? flight.price * 2 : flight.price,
-        airline: flight.airline,
-        from: flight.from,
-        to: flight.to,
-        status: "selected",
+        ...flight,
+      seat: seatId,
+      price: isBusinessClass ? flight.price * 2 : flight.price,
+      status: "selected",
+      class: isBusinessClass ? "business" : "economy",
       };
       dispatch(addTicket(ticket));
     }
@@ -121,7 +122,7 @@ const FlightDetails: React.FC = () => {
       const rowSeats = config.business.layout.map((seat) => {
         const seatId = `${seat}${row}`;
         const isSelected = cartTickets.some(
-          (t) => flight && t.flightId === flight.id && t.seat === seatId
+          (t) => flight && t.id === flight.id && t.seat === seatId
         );
         return (
           <Grid key={seatId}>
@@ -156,7 +157,7 @@ const FlightDetails: React.FC = () => {
       const rowSeats = config.economy.layout.map((seat) => {
         const seatId = `${seat}${row}`;
         const isSelected = cartTickets.some(
-          (t) => flight && t.flightId === flight.id && t.seat === seatId
+          (t) => flight && t.id === flight.id && t.seat === seatId
         );
         return (
           <Grid key={seatId}>
@@ -185,22 +186,18 @@ const FlightDetails: React.FC = () => {
     return seatRows;
   };
 
-  if (isLoading) return <Typography>Loading...</Typography>;
-  if (error) return <Typography color="error">{error}</Typography>;
+    if (isLoading)
+      return <CircularProgress sx={{ display: "block", mx: "auto", mt: 4 }} />;
+    if (error)
+      return (
+        <Typography color="error" align="center">
+          {error}
+        </Typography>
+      );
   if (!flight) return null;
 
   return (
     <Box sx={rootContainer}>
-      {/* <Typography variant="h5" gutterBottom>
-        ✈️ Flight from <strong>{flight.from}</strong> to <strong>{flight.to}</strong>
-      </Typography> */}
-      {/* <Typography variant="body1">Airline: {flight.airline}</Typography>
-      <Typography variant="body1">Departure: {flight.departureTime}</Typography>
-      <Typography variant="body1">Arrival: {flight.arrivalTime}</Typography> */}
-
-      {/* <Typography variant="h6" sx={seatSelectionTitle}>
-        Select your seat:
-      </Typography> */}
       <Paper sx={seatsContainer(theme)}>
         {renderSeats()}
       </Paper>

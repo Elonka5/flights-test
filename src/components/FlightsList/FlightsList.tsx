@@ -4,14 +4,28 @@ import {
   Grid,
   Typography,
   CircularProgress,
-  Box,
   TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Box,
 } from "@mui/material";
-// import FavoriteIcon from "@mui/icons-material/Favorite";
-// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import type { Flight } from "../../types/types";
-import BasicCard from "../FlightCard/FlightCard";
 import { getFlights } from "../../redux/flightsApi";
+import type { Flight } from "../../types/types";
+import {
+  flightsInputWrapper,
+  inputLabelStyles,
+  inputStyles,
+  listWrapper,
+  selectStyles,
+  titleStyles,
+} from "./FlightsList.styles";
+
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import AirlinesIcon from "@mui/icons-material/Airlines";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import FlightCard from "../FlightCard/FlightCard";
 
 const FlightsList: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
@@ -21,18 +35,28 @@ const FlightsList: React.FC = () => {
     JSON.parse(localStorage.getItem("favorites") || "[]")
   );
   const [filter, setFilter] = useState<string>("");
+  const [airlineFilter, setAirlineFilter] = useState<string>("");
+  const [priceSort, setPriceSort] = useState<string>("default");
   const navigate = useNavigate();
 
+  const uniqueAirlines = React.useMemo(() => {
+    return [
+      "All",
+      ...[...new Set(flights.map((flight) => flight.airline))].sort(),
+    ];
+  }, [flights]);
 
   useEffect(() => {
     const fetchFlights = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await getFlights(); 
+        const data = await getFlights();
         setFlights(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch flights.");
+      } catch (error) {
+        setError(
+          error instanceof Error ? error.message : "Failed to fetch flights."
+        );
       } finally {
         setIsLoading(false);
       }
@@ -40,11 +64,9 @@ const FlightsList: React.FC = () => {
     fetchFlights();
   }, []);
 
-
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
-
 
   const toggleFavorite = (id: string) => {
     setFavorites((prev) =>
@@ -52,51 +74,95 @@ const FlightsList: React.FC = () => {
     );
   };
 
-  // Фільтрація рейсів
-  const filteredFlights = flights.filter(
-    (flight) =>
-      flight.from.toLowerCase().includes(filter.toLowerCase()) ||
-      flight.to.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredAndSortedFlights = flights
+    .filter(
+      (flight) =>
+        (flight.from.toLowerCase().includes(filter.toLowerCase()) ||
+          flight.to.toLowerCase().includes(filter.toLowerCase())) &&
+        (airlineFilter === "All" ||
+          airlineFilter === "" ||
+          flight.airline.toLowerCase().includes(airlineFilter.toLowerCase()))
+    )
+    .sort((a, b) => {
+      if (priceSort === "priceAsc") return a.price - b.price;
+      if (priceSort === "priceDesc") return b.price - a.price;
+      return 0;
+    });
 
-  if (isLoading) return <CircularProgress sx={{ display: "block", mx: "auto", mt: 4 }} />;
-  if (error) return <Typography color="error" align="center">{error}</Typography>;
+  if (isLoading)
+    return <CircularProgress sx={{ display: "block", mx: "auto", mt: 4 }} />;
+  if (error)
+    return (
+      <Typography color="error" align="center">
+        {error}
+      </Typography>
+    );
 
   return (
-    <Box sx={{ p: 3, maxWidth: 1200, mx: "auto" }}>
-      <Typography variant="h4" gutterBottom>
+    <>
+      <Box sx={flightsInputWrapper}>
+        <TextField
+          label={
+            <span>
+              <FmdGoodIcon sx={{ verticalAlign: "middle", marginRight: 0.5 }} />{" "}
+              Filter by destination
+            </span>
+          }
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          fullWidth
+          sx={inputStyles}
+        />
+        <FormControl fullWidth>
+          <InputLabel sx={inputLabelStyles}>
+            <AirlinesIcon sx={{ verticalAlign: "middle", marginRight: 0.5 }} />{" "}
+            Filter by Airline
+          </InputLabel>
+          <Select
+            value={airlineFilter}
+            onChange={(e) => setAirlineFilter(e.target.value)}
+            sx={selectStyles}
+          >
+            {uniqueAirlines.map((airline) => (
+              <MenuItem key={airline} value={airline}>
+                {airline}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl fullWidth>
+          <InputLabel sx={inputLabelStyles}>
+            <MonetizationOnIcon
+              sx={{ verticalAlign: "middle", marginRight: 0.5 }}
+            />{" "}
+            Sort by Price
+          </InputLabel>
+          <Select
+            value={priceSort}
+            onChange={(e) => setPriceSort(e.target.value)}
+            sx={selectStyles}
+          >
+            <MenuItem value="default">Default</MenuItem>
+            <MenuItem value="priceAsc">Low to High</MenuItem>
+            <MenuItem value="priceDesc">High to Low</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Typography component="h1" sx={titleStyles}>
         Available Flights
       </Typography>
-      <TextField
-        label="Filter by destination"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        fullWidth
-        sx={{ mb: 3 }}
-      />
-      <Grid component="ul" container spacing={2}>
-        {filteredFlights.map((flight) => (
-          
-            <BasicCard
+      <Grid component="ul" container spacing={3} sx={listWrapper}>
+        {filteredAndSortedFlights.map((flight) => (
+          <FlightCard
             key={flight.id}
-              flight={flight}
-              onClick={() => navigate(`/flights/${flight.id}`)}
-              isFavorite={favorites.includes(flight.id)}
-              toggleFavorite={toggleFavorite}
-              // action={
-              //   <IconButton onClick={() => toggleFavorite(flight.id)}>
-              //     {favorites.includes(flight.id) ? (
-              //       <FavoriteIcon color="error" />
-              //     ) : (
-              //       <FavoriteBorderIcon />
-              //     )}
-              //   </IconButton>
-              // }
-            />
-          
+            flight={flight}
+            onClick={() => navigate(`/flights/${flight.id}`)}
+            isFavorite={favorites.includes(flight.id)}
+            toggleFavorite={toggleFavorite}
+          />
         ))}
       </Grid>
-    </Box>
+    </>
   );
 };
 

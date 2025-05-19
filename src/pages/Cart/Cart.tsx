@@ -1,9 +1,13 @@
-// import React from 'react'
+import { Box } from "@mui/material";
+import { sectionStyles } from "../../components/FlightsSection/FlightsSection.styles";
+import CartComponent from "../../components/CartComponent/CartComponent";
 
 const Cart = () => {
   return (
-    <div>Cart</div>
-  )
-}
+    <Box component="section" sx={sectionStyles}>
+      <CartComponent />
+    </Box>
+  );
+};
 
-export default Cart
+export default Cart;

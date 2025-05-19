@@ -6,7 +6,7 @@ interface CartState {
 }
 
 interface RemoveTicketPayload {
-  flightId: string;
+  id: string;
   seat: string;
 }
 
@@ -22,13 +22,10 @@ const cartSlice = createSlice({
     addTicket: (state, action: PayloadAction<Ticket>) => {
       state.tickets.push(action.payload);
     },
-    // removeTicket: (state, action: PayloadAction<string>) => {
-    //   state.tickets = state.tickets.filter(ticket => ticket.flightId !== action.payload);
-    // },
     removeTicket: (state, action: PayloadAction<RemoveTicketPayload>) => {
       state.tickets = state.tickets.filter(
         ticket =>
-          !(ticket.flightId === action.payload.flightId && ticket.seat === action.payload.seat)
+          !(ticket.id === action.payload.id && ticket.seat === action.payload.seat)
       );
     },
     clearCart: state => {
